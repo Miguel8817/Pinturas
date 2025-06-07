@@ -2,16 +2,24 @@ FROM python:3.11-slim
 
 WORKDIR /app
 
-# Instala dependencias del sistema (sin git/git-lfs)
+# Configura un mirror confiable de pip (opcional)
+ENV PIP_NO_CACHE_DIR=1 \
+    PIP_DISABLE_PIP_VERSION_CHECK=1 \
+    PIP_DEFAULT_TIMEOUT=100
+
+# Instala dependencias del sistema primero
 RUN apt-get update && apt-get install -y \
     build-essential \
     libffi-dev \
     libssl-dev \
     && rm -rf /var/lib/apt/lists/*
 
+# Copia requirements.txt
 COPY requirements.txt .
-RUN pip install --no-cache-dir --upgrade pip setuptools wheel \
-    && pip install --no-cache-dir -r requirements.txt
+
+# Instalación en dos pasos (más estable)
+RUN python -m pip install --upgrade pip setuptools wheel
+RUN pip install --no-cache-dir -r requirements.txt
 
 COPY . .
 
