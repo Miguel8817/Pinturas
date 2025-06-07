@@ -4,8 +4,7 @@ from werkzeug.security import generate_password_hash, check_password_hash
 import MySQLdb.cursors
 import os
 from datetime import datetime
-import pymysql
-pymysql.install_as_MySQLdb()
+
 
 
 app = Flask(__name__)
