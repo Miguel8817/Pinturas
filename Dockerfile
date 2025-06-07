@@ -14,18 +14,20 @@ ENV PYTHONUNBUFFERED=1 \
     FLASK_APP=app.py \
     FLASK_ENV=production
 
-# 3. Copia requirements.txt primero para cachear
+# 3. Copiar y cachear dependencias
 COPY requirements.txt .
-
-# 4. Instalación optimizada de dependencias
 RUN pip install --no-cache-dir --upgrade pip && \
     pip install --no-cache-dir -r requirements.txt
 
-# 5. Copia la aplicación
+# 4. Copiar aplicación
 COPY . .
 
+# 5. Crear usuario no root
+RUN adduser --disabled-password --gecos '' appuser
+USER appuser
+
 # 6. Puerto expuesto
-EXPOSE ${PORT:-5000}
+EXPOSE 5000
 
 # 7. Comando de ejecución
-CMD ["gunicorn", "--bind", "0.0.0.0:${PORT:-5000}", "--workers", "4", "app:app"]
+CMD ["sh", "-c", "gunicorn --bind 0.0.0.0:${PORT:-5000} --workers 4 app:app"]
