@@ -21,4 +21,4 @@ RUN python -m pip install --upgrade pip setuptools wheel && \
 # 4. Copia el resto de la aplicación
 COPY . .
 
-CMD ["gunicorn", "--bind", "0.0.0.0:5000", "app:app"]
+CMD ["gunicorn", "--bind", "0.0.0.0:33367", "app:app"]
