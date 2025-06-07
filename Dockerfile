@@ -2,31 +2,30 @@ FROM python:3.11-slim
 
 WORKDIR /app
 
-# 1. Instala TODAS las dependencias necesarias
+# 1. Instalación de dependencias del sistema
 RUN apt-get update && apt-get install -y \
     build-essential \
     python3-dev \
     default-libmysqlclient-dev \
-    libssl-dev \
-    zlib1g-dev \
-    libffi-dev \
     && rm -rf /var/lib/apt/lists/*
 
-# 2. Configuración esencial
-ENV PYTHONUNBUFFERED=1
+# 2. Configuración del entorno
+ENV PYTHONUNBUFFERED=1 \
+    FLASK_APP=app.py \
+    FLASK_ENV=production
 
-# 3. Instalación DIRECTA de mysqlclient primero
-RUN pip install --no-cache-dir --upgrade pip && \
-    pip install --no-cache-dir wheel && \
-    pip install --no-cache-dir mysqlclient==2.2.0 --no-build-isolation
-
-# 4. Copia requirements.txt
+# 3. Copia requirements.txt primero para cachear
 COPY requirements.txt .
 
-# 5. Instala el resto
-RUN pip install --no-cache-dir -r requirements.txt
+# 4. Instalación optimizada de dependencias
+RUN pip install --no-cache-dir --upgrade pip && \
+    pip install --no-cache-dir -r requirements.txt
 
-# 6. Copia la aplicación
+# 5. Copia la aplicación
 COPY . .
 
-CMD ["sh", "-c", "gunicorn --bind 0.0.0.0:${PORT:-5000} --workers 4 app:app"]
+# 6. Puerto expuesto
+EXPOSE ${PORT:-5000}
+
+# 7. Comando de ejecución
+CMD ["gunicorn", "--bind", "0.0.0.0:${PORT:-5000}", "--workers", "4", "app:app"]
