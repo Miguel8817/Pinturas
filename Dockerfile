@@ -2,25 +2,26 @@ FROM python:3.11-slim
 
 WORKDIR /app
 
-# Instalación de dependencias nativas para flask_mysqldb
+
+
+# 1. Instala dependencias del sistema PRIMERO (¡crítico para mysqlclient!)
 RUN apt-get update && apt-get install -y \
     build-essential \
-    python3-dev \
+    libffi-dev \
+    libssl-dev \
     default-libmysqlclient-dev \
+    pkg-config \
     && rm -rf /var/lib/apt/lists/*
 
-# Copiar requirements
+
+# 2. Copia SOLO requirements.txt inicialmente
 COPY requirements.txt .
 
-# Instalar dependencias Python
-RUN pip install --no-cache-dir --upgrade pip && \
+# 3. Instalación robusta de dependencias
+RUN python -m pip install --upgrade pip setuptools wheel && \
     pip install --no-cache-dir -r requirements.txt
 
-# Copiar el resto de la app
+# 4. Copia el resto de la aplicación
 COPY . .
 
-# Puerto
-EXPOSE ${PORT:-5000}
-
-# Comando para correr
-CMD ["gunicorn", "--bind", "0.0.0.0:${PORT:-5000}", "--workers", "4", "app:app"]
+CMD ["gunicorn", "--bind", "0.0.0.0:$PORT", "--workers", "4", "app:app"]
