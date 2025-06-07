@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <title>Iniciar Sesión - Ferretería</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="/static/styles/login.css">
+    <link rel="icon" href="/static/img/Logo.png">
+    <style>
+        
+    </style>
+</head>
+<body>
+
+    <div class="login-container">
+        <h2>Iniciar Sesión</h2>
+        <form action="/login" method="POST">
+            <label for="usuario">Correo:</label>
+            <input type="text" id="usuario" name="email" required>
+
+            <label for="contrasena">Contraseña:</label>
+            <input type="password" id="contrasena" name="password" required>
+
+            <button type="submit">Entrar</button>
+        </form>
+        <div class="register-link">
+            ¿No tienes cuenta? <a href="/registro">Regístrate aquí</a>
+        </div>
+        {% with messages = get_flashed_messages(with_categories=true) %}
+          {% if messages %}
+            <div class="flash-messages">
+              {% for category, message in messages %}
+                <div class="alert {{ category }}">{{ message }}</div>
+              {% endfor %}
+            </div>
+          {% endif %}
+        {% endwith %}
+    </div>
+
+</body>
+</html>

@@ -1,0 +1,61 @@
+body {
+  margin: 0;
+  font-family: 'Segoe UI', sans-serif;
+  background: linear-gradient(to right, #c62828, #8e0000);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+}
+
+.promo-card {
+  background: #fff;
+  padding: 30px;
+  max-width: 500px;
+  border-radius: 15px;
+  box-shadow: 0 8px 16px rgba(0,0,0,0.2);
+  text-align: center;
+  color: #333;
+}
+
+.promo-card h1 {
+  color: #b71c1c;
+  margin-bottom: 10px;
+}
+
+.slogan {
+  font-style: italic;
+  color: #555;
+  margin-bottom: 20px;
+}
+
+.destacados {
+  text-align: left;
+  list-style: none;
+  padding: 0;
+  margin-bottom: 20px;
+}
+
+.destacados li {
+  margin: 8px 0;
+}
+
+.info-contacto p {
+  margin: 5px 0;
+  font-size: 14px;
+}
+
+.boton {
+  display: inline-block;
+  margin-top: 20px;
+  background-color: #c62828;
+  color: white;
+  padding: 12px 20px;
+  border-radius: 8px;
+  text-decoration: none;
+  font-weight: bold;
+}
+
+.boton:hover {
+  background-color: #a71b1b;
+}
