@@ -87,7 +87,7 @@ ul {
 }
 
 .btn-primary:hover {
-    
+
     border-color: var(--primary-dark);
     transform: translateY(-2px);
 }
@@ -252,7 +252,7 @@ ul {
     display: flex;
     align-items: center;
     position: relative;
-    background-image: url(https://cdn.pixabay.com/photo/2019/03/29/04/35/tools-4088531_1280.jpg);
+    background-image: url(../img/FERRE.jpg);
     background-repeat: no-repeat;
     background-size: cover;
 }
@@ -546,4 +546,5 @@ ul {
 }
 
 .boton:hover {
-    background-color: #a71b1b; }
+    background-color: #a71b1b;
+}
